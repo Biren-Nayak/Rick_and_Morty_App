@@ -1,23 +1,20 @@
 package com.example.rickandmortyapp.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.example.rickandmortyapp.database.CharactersListDatabase
-import com.example.rickandmortyapp.models.Result
-import com.example.rickandmortyapp.network.RickAndMortyApiService
+import com.example.rickandmortyapp.database.CharactersDao
+import com.example.rickandmortyapp.network.RickAndMortyApi
+import javax.inject.Inject
 
-class RickAndMortyRepository(private val database: CharactersListDatabase){
+class RickAndMortyRepository @Inject constructor(
+    private val charactersDao: CharactersDao,
+    private val rickAndMortyApi: RickAndMortyApi
+    ){
 
-    private val dao = database.charactersDao()
-
-    val characters: LiveData<List<Result>> = dao.getAllArticles().asLiveData()
-
+    fun getAllCharacters() = charactersDao.getAllArticles()
 
     suspend fun refreshCharacters(){
-        val characters = RickAndMortyApiService.rickAndMortyApi.getResult().characters
-        dao.insertCharacter(*characters.toTypedArray())
+        val characters = rickAndMortyApi.getResult().characters
+        charactersDao.insertCharacter(*characters.toTypedArray())
     }
-
 
 
 }
