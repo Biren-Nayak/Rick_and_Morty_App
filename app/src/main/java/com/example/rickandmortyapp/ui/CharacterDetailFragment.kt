@@ -8,15 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.rickandmortyapp.databinding.FragmentCharacterDetailBinding
 import com.example.rickandmortyapp.viewmodels.MainViewModel
-import com.example.rickandmortyapp.viewmodels.MainViewModelFactory
 
 
 class CharacterDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentCharacterDetailBinding
-    private val viewModel: MainViewModel by activityViewModels{
-        activity?.application?.let { MainViewModelFactory(it) }!!
-    }
+    private val viewModel: MainViewModel by activityViewModels()
 
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
